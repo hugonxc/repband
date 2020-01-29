@@ -1,0 +1,10 @@
+<h1>Create new repertory</h1>
+    <form method="post">
+        {% csrf_token %}
+
+        {% if form %}
+            {{ form.as_p }}
+        {% endif %}
+
+        <button type="submit">Create</button>
+    </form>

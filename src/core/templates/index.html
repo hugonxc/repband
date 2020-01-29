@@ -1,0 +1,16 @@
+<h1>Hello Maniçoba <3</h1>
+
+<h3>Hey </h3>
+
+
+<form method="post">
+    {% csrf_token %}
+
+    {% if form %}
+        {{ form.as_p }}
+    {% endif %}
+
+    <button type="submit">Login</button>
+</form>
+
+<a href="{% url 'signup' %}">Sign up</a>
