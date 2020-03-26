@@ -1,3 +1,10 @@
 <h1>Hey you</h1>
 
 <a href="{% url 'logout' %}">logout</a>
+
+
+<ul>
+    {% for r in repertories %}
+        <a href="{% url 'manage_repertory' r.pk %}"><li>{{ r.name }}</li></a>
+    {% endfor %}
+</ul>
