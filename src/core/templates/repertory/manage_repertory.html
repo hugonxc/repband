@@ -4,15 +4,26 @@
 
 
 <h3> Music List</h3>
-<table>
-    <th>Name</th>
-    <th>Artist</th>
-    <th>Tonality</th>
-    <th>Rehearsed</th>    
-    <th>Note</th>
-    <th>Link</th>
+<table border=1>
+    <tr>
+        <th>Name</th>
+        <th>Artist</th>
+        <th>Tonality</th>
+        <th>Rehearsed</th>    
+        <th>Note</th>
+        <th>Link</th>    
+    </tr>
 
-
+    {% for rep_music in musics %}
+        <tr>
+            <td>{{ rep_music.music.name }}</td>
+            <td>{{ rep_music.music.artist }}</td>
+            <td>{{ rep_music.tonality }}</td>
+            <td>{{ rep_music.rehearsed }}</td>
+            <td>{{ rep_music.note }}</td>
+            <td>{{ rep_music.music.yt_link }}</td>
+        </tr>
+    {% endfor %}
 </table>
 
 <a href="#">Add music</a>

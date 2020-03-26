@@ -47,7 +47,6 @@ def logout_view(request):
 
 @login_required
 def profile(request):
-    print("oi")
     user = User.objects.get(username=request.user)
     repertories = Repertory.objects.filter(owner=user)
 
@@ -102,13 +101,8 @@ def create_repertory(request):
 def manage_repertory(request, pk):
     print("PKa", pk)
     repertory = Repertory.objects.get(pk=pk)
-    musics = repertory.repertory_musics
+    musics = repertory.repertory_musics.all()
     
-    if musics is not None:
-        print("Ma", musics)
-    else:
-        print("M", musics)
-
     # if request.method == "POST":
     #     form = CreateRepertoryForm(request.POST)
         
@@ -124,7 +118,8 @@ def manage_repertory(request, pk):
     # else:
     #     form = CreateRepertoryForm()
 
-    return render(request, 'repertory/manage_repertory.html', {'repertory': repertory})
+    return render(request, 'repertory/manage_repertory.html', {'repertory': repertory,
+                                                               'musics': musics})
 
 
 
