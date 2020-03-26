@@ -1,9 +1,7 @@
 ### Django ###
-*.log
-*.pot
 *.pyc
-__pycache__/
-local_settings.py
+src/core/__pycache__/
+src/repband/__pycache__/
 
 .env
 db.sqlite3
