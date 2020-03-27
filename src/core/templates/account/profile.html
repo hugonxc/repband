@@ -1,10 +1,16 @@
+<nav>
+    <span>RepBand</span>
+    <a href="{% url 'logout' %}">logout</a>
+</nav>
+
 <h1>Hey you</h1>
 
-<a href="{% url 'logout' %}">logout</a>
-
-
+<p>Your repertories</p>
 <ul>
     {% for r in repertories %}
         <a href="{% url 'manage_repertory' r.pk %}"><li>{{ r.name }}</li></a>
     {% endfor %}
 </ul>
+
+<p><a href="{% url 'create_repertory' %}">New repertory</a></p>
+<p><a href="{% url 'add_new_music' %}">Missing some music? Add here</a></p>

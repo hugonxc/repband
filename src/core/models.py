@@ -2,9 +2,13 @@ from django.db import models
 from django.contrib.auth.models import User
 
 class Music(models.Model):
-    name = models.CharField(unique=True, max_length=200)
-    artist = models.CharField(unique=True, max_length=200)
+    name = models.CharField(max_length=200)
+    artist = models.CharField(max_length=200)
     yt_link = models.CharField(unique=True, max_length=200)
+
+    def __str__(self):
+        return self.name + ' - ' + self.artist
+
 
 class RepertoryMusic(models.Model):
     TONALITES = [
@@ -34,10 +38,10 @@ class RepertoryMusic(models.Model):
 
     music = models.ForeignKey(Music,on_delete=models.DO_NOTHING)
     rehearsed = models.BooleanField(default=False)
-    note = models.CharField(unique=True, max_length=500)
+    note = models.CharField(max_length=500)
 
 class Repertory(models.Model):
     owner = models.ForeignKey(User,on_delete=models.DO_NOTHING)
-    name = models.CharField(unique=True, max_length=200)
-    note = models.CharField(unique=True, max_length=500)    
+    name = models.CharField(max_length=200)
+    note = models.CharField(max_length=500)    
     repertory_musics = models.ManyToManyField(RepertoryMusic)

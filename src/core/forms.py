@@ -1,7 +1,7 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
-from core.models import Music, Repertory
+from core.models import Music, Repertory, RepertoryMusic
 
 
 class SignUpForm(UserCreationForm):
@@ -35,3 +35,15 @@ class CreateRepertoryForm(forms.Form):
 
     class Meta:
         model = Repertory
+
+
+class AddMusicForm(forms.Form):
+    CHOICES = (('Option 1', 'Option 1'),('Option 2', 'Option 2'),)
+
+    rehearsed = forms.BooleanField(required=False)
+    music = forms.ModelChoiceField(queryset=Music.objects.all(), to_field_name="id")
+    tonality = forms.ChoiceField(choices=RepertoryMusic.TONALITES)
+    note = forms.CharField(max_length=500, required=False)
+
+    class Meta:
+        model = RepertoryMusic

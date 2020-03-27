@@ -26,4 +26,14 @@
     {% endfor %}
 </table>
 
-<a href="#">Add music</a>
+<br>
+<hr>
+<br>
+
+<h3>Add music to this repertory</h3>
+
+<form action="" method="post">
+    {% csrf_token %}
+    {{ add_music_form.as_p }}
+    <input type="submit" value="Add music">
+</form>
