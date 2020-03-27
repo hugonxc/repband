@@ -37,13 +37,15 @@ class CreateRepertoryForm(forms.Form):
         model = Repertory
 
 
-class AddMusicForm(forms.Form):
-    CHOICES = (('Option 1', 'Option 1'),('Option 2', 'Option 2'),)
-
-    rehearsed = forms.BooleanField(required=False)
-    music = forms.ModelChoiceField(queryset=Music.objects.all(), to_field_name="id")
-    tonality = forms.ChoiceField(choices=RepertoryMusic.TONALITES)
-    note = forms.CharField(max_length=500, required=False)
+class AddMusicForm(forms.ModelForm):
 
     class Meta:
         model = RepertoryMusic
+        fields = ['rehearsed', 'music', 'tonality', 'note']
+
+class UpdateMusicForm(forms.ModelForm):
+
+    class Meta:
+        model = RepertoryMusic
+        fields = ['rehearsed', 'tonality', 'note']
+        

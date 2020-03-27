@@ -38,10 +38,10 @@ class RepertoryMusic(models.Model):
 
     music = models.ForeignKey(Music,on_delete=models.DO_NOTHING)
     rehearsed = models.BooleanField(default=False)
-    note = models.CharField(max_length=500)
+    note = models.CharField(max_length=500, blank=True)
 
 class Repertory(models.Model):
     owner = models.ForeignKey(User,on_delete=models.DO_NOTHING)
     name = models.CharField(max_length=200)
-    note = models.CharField(max_length=500)    
+    note = models.CharField(max_length=500, blank=True)    
     repertory_musics = models.ManyToManyField(RepertoryMusic)

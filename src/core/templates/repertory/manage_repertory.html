@@ -14,17 +14,26 @@
         <th>Link</th>    
     </tr>
 
-    {% for rep_music in musics %}
+    {% for rm in music_set %}
         <tr>
-            <td>{{ rep_music.music.name }}</td>
-            <td>{{ rep_music.music.artist }}</td>
-            <td>{{ rep_music.tonality }}</td>
-            <td>{{ rep_music.rehearsed }}</td>
-            <td>{{ rep_music.note }}</td>
-            <td>{{ rep_music.music.yt_link }}</td>
+            <form action="{% url 'update_music'  %}" method="post">
+                {% csrf_token %}
+                <td>{{ rm.object.music.name }}</td>
+                <td>{{ rm.object.music.artist }}</td>
+                <td>{{ rm.form.tonality }}</td>
+                <td>{{ rm.form.rehearsed }}</td>
+                <td>{{ rm.form.note }}</td>
+                <td>{{ rm.object.music.yt_link }}</td>
+                <input type="hidden" name="rm_pk" value="{{ rm.object.pk }}">
+                <input type="hidden" name="r_pk" value="{{ repertory.pk }}">
+
+                <td><input type="submit" value="Update"></td>
+            </form>
         </tr>
     {% endfor %}
+
 </table>
+
 
 <br>
 <hr>
@@ -32,7 +41,7 @@
 
 <h3>Add music to this repertory</h3>
 
-<form action="" method="post">
+<form method="post">
     {% csrf_token %}
     {{ add_music_form.as_p }}
     <input type="submit" value="Add music">

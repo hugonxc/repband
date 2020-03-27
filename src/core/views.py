@@ -6,7 +6,7 @@ from django.contrib.auth.models import User
 
 from core.models import Music, Repertory, RepertoryMusic
 
-from core.forms import SignUpForm, LoginForm, NewMusicForm, CreateRepertoryForm, AddMusicForm
+from core.forms import SignUpForm, LoginForm, NewMusicForm, CreateRepertoryForm, AddMusicForm, UpdateMusicForm
 
 def index(request):
     if request.method == "POST":
@@ -99,48 +99,42 @@ def create_repertory(request):
 
 @login_required
 def manage_repertory(request, pk):
-    print("PKa", pk)
     repertory = Repertory.objects.get(pk=pk)
-    musics = repertory.repertory_musics.all()
-    
+    add_music_form = AddMusicForm()    
+    music_set = []
+    for music in repertory.repertory_musics.all():
+        music_set.append({'form': AddMusicForm(instance=music),
+                          'object': music})
+
     if request.method == "POST":
-        pass
         form = AddMusicForm(request.POST)
         
         if form.is_valid():
-            rehearsed = form.cleaned_data.get('rehearsed')
-            music = form.cleaned_data.get('music')
-            tonality = form.cleaned_data.get('tonality')
-            note = form.cleaned_data.get('note')
-
-            print("INFO:", rehearsed, music, tonality, note)
-
-            rm = RepertoryMusic.objects.create(tonality=tonality,
-                                                music=music, 
-                                                rehearsed=rehearsed,
-                                                note=note)
-
+            rm = form.save()
+            print(rm.pk)
             repertory.repertory_musics.add(rm)
             repertory.save()
 
-        #     user = User.objects.get(username=request.user)
-
-        #     Repertory.objects.create(owner=user,
-        #                            name=name, 
-        #                            note=note)
-            return redirect('manage_repertory', pk=pk)
-    else:
-        add_music_form = AddMusicForm()
+            return redirect('manage_repertory', pk=pk)        
 
     return render(request, 'repertory/manage_repertory.html', {'repertory': repertory,
-                                                               'musics': musics,
+                                                               'music_set': music_set,
                                                                'add_music_form': add_music_form})
 
 
 
 
 @login_required
-def add_music_to_repertory(request):
-    pass
+def update_repertory_music(request):
+    if request.method == "POST":
+        rm = RepertoryMusic.objects.get(pk=request.POST.get('rm_pk'))
 
+        form = UpdateMusicForm(request.POST, instance=rm)
+
+        if form.is_valid():
+            print("valid")
+            form.save()
+
+    return redirect('manage_repertory', pk=request.POST.get('r_pk'))
+    
 
